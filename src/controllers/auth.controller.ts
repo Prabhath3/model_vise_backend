@@ -46,6 +46,7 @@ export const login = async (req: Request, res: Response) => {
     const user = await loginUser(email, password);
 
     req.session.userId = user.id;
+    req.session.role = user.role;
 
     res.status(200).json({
       success: true,
@@ -126,3 +127,24 @@ export const getCurrentUser = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const logout = ( req: Request, res : Response) => {
+  req.session.destroy((error) => {
+    if(error){
+      console.log(error)
+
+      res.status(500).json({
+        success:false,
+        message : "Logout failed"
+      })
+      return
+    }
+
+    res.clearCookie("connect.sid")
+
+    res.status(200).json({
+      success:true,
+      message : "Logout successful"
+    })
+  })
+}

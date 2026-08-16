@@ -15,18 +15,18 @@ app.use(express.json());
 
 app.use(
   session({
-    store:new PgSession({
-      conString : process.env.DATABASE_URL,
-      createTableIfMissing : true
+    store: new PgSession({
+      conString: process.env.DATABASE_URL,
+      createTableIfMissing: true
     }),
 
-    secret:process.env.SESSION_SECRET!,
-    resave:false,
-    saveUninitialized:false,
-    cookie:{
-      httpOnly:true,
-      secure : false,
-      maxAge:1000 * 60 * 60 * 24
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 24
     }
   })
 )
@@ -39,21 +39,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
-async function startServer() {
-  try {
-    await prisma.$connect();
-
-    console.log("✅ Database connected successfully");
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.error("❌ Database connection failed:", error);
-  }
-}
-
-startServer();
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

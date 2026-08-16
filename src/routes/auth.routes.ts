@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, getCurrentUser } from "../controllers/auth.controller.js";
+import { register, login, getCurrentUser, logout } from "../controllers/auth.controller.js";
 import { validate } from "../middleware/validate.js";
 import { registerSchema, loginSchema } from "../validators/auth.validator.js";
 import { requireAuth } from "../middleware/auth.middleware.js";
@@ -22,5 +22,10 @@ router.get(
   "/me",
   requireAuth,
   getCurrentUser
+)
+
+router.post(
+  "/logout",
+  logout
 )
 export default router;
