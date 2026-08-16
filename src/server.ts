@@ -1,4 +1,6 @@
 import express from "express";
+import userRoutes from "./routes/user.routes.js"
+import adminRoutes from "./routes/admin.routes.js"
 import authRoutes from "./routes/auth.routes.js";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
@@ -32,6 +34,8 @@ app.use(
 )
 
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", (req, res) => {
   res.json({
