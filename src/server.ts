@@ -6,9 +6,18 @@ import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
 import { prisma } from "./config/prisma.js";
 import cors from "cors";
-
+import "dotenv/config"
 
 const app = express();
+
+const sessionSecret = process.env.SESSION_SECRET
+const PORT = Number(process.env.PORT) || 5000;
+
+if(!sessionSecret){
+  throw new Error("SESSION_SECRET is not defined")
+}
+
+
 const PgSession = connectPgSimple(session);
 
 app.use(
@@ -17,9 +26,6 @@ app.use(
     credentials:true
   })
 )
-
-
-const PORT = 5000;
 
 app.use(express.json());
 
@@ -30,7 +36,7 @@ app.use(
       createTableIfMissing: true
     }),
 
-    secret: process.env.SESSION_SECRET!,
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
     cookie: {
