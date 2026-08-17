@@ -5,10 +5,18 @@ import authRoutes from "./routes/auth.routes.js";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
 import { prisma } from "./config/prisma.js";
+import cors from "cors";
 
 
 const app = express();
 const PgSession = connectPgSimple(session);
+
+app.use(
+  cors({
+    origin:process.env.FRONTEND_URL,
+    credentials:true
+  })
+)
 
 
 const PORT = 5000;
